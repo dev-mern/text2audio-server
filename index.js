@@ -4,14 +4,14 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-
-
 // build express app 
 const app = express();
 const port = process.env.PORT || 5000;
 
 // app middlewares 
 dotenv.config();
+const { envInfo } = require("./src/utils/envInitializer");
+
 const corsOptions = {
     // origin: [process.env.FRONTEND_BASE_URL, process.env.FRONTEND_DEV_URL,],
     origin: [envInfo.FRONTEND_BASE_URL, envInfo.FRONTEND_DEV_URL,],
@@ -30,10 +30,7 @@ const { convert_cardRouter } = require("./src/router/convert_cardRoute");
 const { freeRoute } = require("./src/router/freeRoutes");
 const { packageRoutes } = require("./src/router/packageRouter");
 const { paymentRoutes } = require("./src/router/paymentRoutes");
-const { envInfo } = require("./src/utils/envInitializer");
-// import { authRouter } from "./src/router/authenticateRouter.mjs";
-// import { sitesRouter } from "./src/router/sitesRouter.mjs";
-// import { lazyLoadRouter } from "./src/router/lazyloadRouter.mjs";
+
 
 // database connection 
 mongoose.connect(envInfo.MONGO_CONNECTION_URI,{
