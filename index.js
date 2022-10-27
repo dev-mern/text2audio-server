@@ -102,5 +102,5 @@ app.use(notFoundHandler);
 app.use(errorHandler)
 
 app.listen(port,()=>{
-    console.log("Word counter wordpress running at ",port);
+    console.log("Speakup AI server running at ",port);
 })

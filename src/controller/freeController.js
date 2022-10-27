@@ -7,10 +7,12 @@ async function getTestIpCtl (req,res,next) {
                     req.connection.remoteAddress || 
                     req.socket.remoteAddress ||
                     req.connection.socket.remoteAddress;
-
+        console.log(reqIP);
         const ipinfo = await getTestIpUserByIpAddressService(reqIP);
-        delete ipinfo.ip; // delete the ip address
-        if (ipinfo._id) {
+        if (ipinfo?._id) {
+            delete ipinfo.ip; // delete the ip address
+            res.status(200).json({error:false,message:"",data:ipinfo})
+        }else if(!ipinfo){
             res.status(200).json({error:false,message:"",data:ipinfo})
         }else{
             throw new Error(ipinfo.message)
