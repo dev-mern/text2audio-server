@@ -2,6 +2,7 @@ const { getConvertCardbyIdService, updateConverCardByIdService } = require("../.
 const { getTestIpUserByIpAddressService, updateTestIpUserByIdService, createNewIpUserService } = require("../../services/testIpUserServices");
 const { freeCharacterLimit } = require("../../staticData/controlledData");
 const { gttActiveLanguages } = require("../../utils/activeLanguageGttUnOfficial");
+const { getRemoteRequesterIpAddress } = require("../../utils/getRemoteuserIpAddress");
 
 
 async function checkCardLimit (req,res,next){
@@ -86,10 +87,7 @@ async function checkRequestIpLimit (req,res,next) {
         }
 
 
-        const ip = req.headers['x-forwarded-for'] || 
-                    req.connection.remoteAddress || 
-                    req.socket.remoteAddress ||
-                    req.connection.socket.remoteAddress;
+        const ip = getRemoteRequesterIpAddress(req)
 
         // check number of characters this ip has converted today
         if (ip) {

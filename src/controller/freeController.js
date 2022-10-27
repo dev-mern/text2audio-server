@@ -1,20 +1,6 @@
-const {getTestIpUserByIpAddressService} = require("../services/testIpUserServices")
+const {getTestIpUserByIpAddressService} = require("../services/testIpUserServices");
+const { getRemoteRequesterIpAddress } = require("../utils/getRemoteuserIpAddress");
 
-const getRequesterIpAddress = (req) =>{
-    let ip = null;
-    if (req.headers['x-forwarded-for']) {
-        ip = req.headers['x-forwarded-for'].split(",")[0];
-    } else if (req.connection && req.connection.remoteAddress) {
-        ip = req.connection.remoteAddress;
-    } else if(req.socket && req.socket.remoteAddress){
-        ip = req.socket.remoteAddress;
-    } else if( req.connection?.socket?.remoteAddress){
-        ip = req.connection.socket.remoteAddress;
-    } else {
-        ip = req.ip;
-    }
-    return ip;
-}
 
 async function getTestIpCtl (req,res,next) {
     
@@ -24,7 +10,7 @@ async function getTestIpCtl (req,res,next) {
         //             req.socket.remoteAddress ||
         //             req.connection.socket.remoteAddress;
 
-        const reqIP = getRequesterIpAddress(req);
+        const reqIP = getRemoteRequesterIpAddress(req);
         
         const ipinfo = await getTestIpUserByIpAddressService(reqIP);
         if (ipinfo?._id) {
