@@ -13,7 +13,8 @@ const port = process.env.PORT || 5000;
 // app middlewares 
 dotenv.config();
 const corsOptions = {
-    origin: [process.env.FRONTEND_BASE_URL, process.env.FRONTEND_DEV_URL,],
+    // origin: [process.env.FRONTEND_BASE_URL, process.env.FRONTEND_DEV_URL,],
+    origin: [envInfo.FRONTEND_BASE_URL, envInfo.FRONTEND_DEV_URL,],
     credentials: true,
 }
 app.use(cors(corsOptions))
